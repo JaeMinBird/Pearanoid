@@ -6,7 +6,6 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
-	"time"
 )
 
 // Config represents the application configuration
@@ -73,9 +72,16 @@ func newServer(config Config) *Server {
 
 func (s *Server) routes() {
 	// API routes
-	s.router.HandleFunc("GET /api/vault", s.handleGetVault)
-	s.router.HandleFunc("POST /api/vault", s.handleSaveVault)
-	s.router.HandleFunc("GET /api/health", s.handleHealthCheck)
+	s.router.HandleFunc("/api/vault", func(w http.ResponseWriter, r *http.Request) {
+		if r.Method == http.MethodGet {
+			s.handleGetVault(w, r)
+		} else if r.Method == http.MethodPost {
+			s.handleSaveVault(w, r)
+		} else {
+			w.WriteHeader(http.StatusMethodNotAllowed)
+		}
+	})
+	s.router.HandleFunc("/api/health", s.handleHealthCheck)
 }
 
 func (s *Server) handleHealthCheck(w http.ResponseWriter, r *http.Request) {
@@ -100,7 +106,7 @@ func (s *Server) handleGetVault(w http.ResponseWriter, r *http.Request) {
 			json.NewEncoder(w).Encode(Vault{Version: 1, Entries: []VaultEntry{}})
 			return
 		}
-		
+
 		log.Printf("Error reading vault: %v", err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
@@ -157,12 +163,12 @@ func (s *Server) handleSaveVault(w http.ResponseWriter, r *http.Request) {
 func (s *Server) authenticate(r *http.Request) bool {
 	token := r.Header.Get("Authorization")
 	expectedToken := getEnv("AUTH_TOKEN", "")
-	
+
 	// In a production environment, you would use a more secure authentication method
 	if expectedToken == "" {
 		return true // Allow all requests if no token is set (for development only)
 	}
-	
+
 	return token == "Bearer "+expectedToken
 }
 
@@ -173,4 +179,4 @@ func getEnv(key, defaultValue string) string {
 		return defaultValue
 	}
 	return value
-} 
+}
