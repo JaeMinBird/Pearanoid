@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  backend:
+    build: 
+      context: ./backend
+    ports:
+      - "8080:8080"
+    volumes:
+      - vault_data:/data
+    environment:
+      - PORT=8080
+      - DATA_PATH=/data
+      - AUTH_TOKEN=${AUTH_TOKEN:-development-token}
+      # Optional S3 backup configuration
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID:-}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY:-}
+    restart: unless-stopped
+
+  # Frontend will be added later
+  # frontend:
+  #   build: ./frontend
+  #   ports:
+  #     - "3000:3000"
+  #   environment:
+  #     - VITE_API_URL=http://localhost:8080
+  #   depends_on:
+  #     - backend
+
+volumes:
+  vault_data:
+    driver: local 

@@ -1,0 +1,9 @@
+dbs:
+  - path: /data/vault.db
+    replicas:
+      - type: s3
+        bucket: pearanoid-backups
+        path: vault
+        endpoint: s3.amazonaws.com
+        # AWS credentials are provided via environment variables:
+        # AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY 
