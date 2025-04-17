@@ -1,2 +1,110 @@
-@import 'tailwindcss';
-@plugin '@tailwindcss/typography';
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Archivo:wght@400;500;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Base styles */
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: #F8F9FA;
+  color: #202124;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Archivo', sans-serif;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+}
+
+/* Component styles */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  font-weight: 500;
+  transition-property: color, background-color, border-color;
+  transition-duration: 200ms;
+}
+.btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1), 0 0 0 4px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary {
+  background-color: #FF5252;
+  color: white;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+}
+.btn-primary:hover {
+  background-color: rgba(255, 82, 82, 0.9);
+}
+.btn-primary:focus {
+  box-shadow: 0 0 0 2px rgba(255, 82, 82, 0.5);
+}
+
+.btn-secondary {
+  background-color: #4285F4;
+  color: white;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+}
+.btn-secondary:hover {
+  background-color: rgba(66, 133, 244, 0.9);
+}
+.btn-secondary:focus {
+  box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.5);
+}
+
+.btn-outline {
+  border-color: #DADCE0;
+  color: #5F6368;
+}
+.btn-outline:hover {
+  background-color: #F1F3F4;
+}
+.btn-outline:focus {
+  box-shadow: 0 0 0 2px rgba(154, 160, 166, 0.4);
+}
+
+.card {
+  background-color: white;
+  border-radius: 0.375rem;
+  border: 1px solid #DADCE0;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+.retro-input {
+  display: block;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #DADCE0;
+  border-radius: 0.375rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  background-color: white;
+  color: #3C4043;
+}
+.retro-input:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(255, 82, 82, 0.3);
+  border-color: #FF5252;
+}
+
+.retro-checkbox {
+  height: 1rem;
+  width: 1rem;
+  border-radius: 0.25rem;
+  border-color: #9AA0A6;
+  color: #FF5252;
+}
+.retro-checkbox:focus {
+  box-shadow: 0 0 0 2px rgba(255, 82, 82, 0.5);
+}
